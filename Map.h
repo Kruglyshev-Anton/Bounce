@@ -17,5 +17,7 @@ public:
 	Map(const char* f);
 	void Draw() override;
 	std::string getType() override;
+	void Move(unsigned char k) override;
+	//void actions_keyboard(unsigned char k);
 };
 

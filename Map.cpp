@@ -48,3 +48,19 @@ std::string Map::getType()
 {
 	return "map";
 }
+
+void Map::Move(unsigned char k)
+{
+	std::string type;
+	for (int i = 0; i < pointhmap; ++i) {
+		for (int j = 0; j < pointwmap; ++j) {
+			type = map[i][j]->getType();
+			if (type == "ball") {
+				map[i][j]->Move(k);
+			}
+			//std::cout << (map[i][j])->getType();
+		}
+	}
+}
+
+

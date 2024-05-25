@@ -28,6 +28,10 @@ void Block::Draw()
 	glEnd();
 }
 
+void Block::Move(unsigned char k)
+{
+}
+
 std::string Block::getType()
 {
 	return "block";

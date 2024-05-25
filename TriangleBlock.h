@@ -3,12 +3,13 @@
 class TriangleBlock:public FullObjects
 {
 private:
-	float x, y;
+	float x, y, h=one_cell_size, w=one_cell_size;
 	int config;
 
 public:
 	TriangleBlock(float x, float y, int config);
 	void Draw() override;
 	std::string getType() override;
+	void Move(unsigned char k) override;
 };
 

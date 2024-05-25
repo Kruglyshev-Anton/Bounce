@@ -12,7 +12,7 @@ void mouse(int button, int state, int x, int y) {
 	
 }
 void keyboard(unsigned char key, int x, int y) {
-	
+	test.Move(key);
 }
 void init() {
 	// Цвет фона
@@ -23,6 +23,12 @@ void init() {
 	gluOrtho2D(0,700,700,0);
 	glMatrixMode(GL_MODELVIEW);
 }
+void timer(int = 0) {
+	display();
+
+	glutTimerFunc(10, timer, 0);
+}
+
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 
@@ -37,6 +43,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboard);
+	glutTimerFunc(10, timer, 0);
 	glutMainLoop();
 	return 0;
 }

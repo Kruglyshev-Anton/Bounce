@@ -8,6 +8,7 @@ private:
 public:
 	Block(float x, float y);
 	void Draw() override;
+	void Move(unsigned char k) override;
 	std::string getType();
 };
 
