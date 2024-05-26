@@ -14,5 +14,7 @@ public:
 	virtual float gety() = 0;
 	virtual float getw() = 0;
 	virtual float geth() = 0;
+	virtual void setx(float val) = 0;
+	virtual void sety(float val) = 0;
 };
 

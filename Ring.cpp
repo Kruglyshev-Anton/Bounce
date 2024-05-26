@@ -54,3 +54,13 @@ float Ring::geth()
 {
 	return h;
 }
+
+void Ring::setx(float val)
+{
+	x = val;
+}
+
+void Ring::sety(float val)
+{
+	y = val;
+}

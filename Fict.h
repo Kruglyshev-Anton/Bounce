@@ -11,6 +11,8 @@ public:
 	float gety() override;
 	float getw() override;
 	float geth() override;
+	void setx(float val) override;
+	void sety(float val) override;
 
 };
 

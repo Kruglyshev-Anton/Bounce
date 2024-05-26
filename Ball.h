@@ -14,12 +14,13 @@ public:
 	void Draw()override;
 	void Phisycs();
 	std::vector<std::pair<float, float>>& getColl();
-	void sety(float val);
-	void setx(float val);
+	
 	void setJ(bool val);
 	float getx() override;
 	float gety() override;
 	float getw() override;
 	float geth() override;
+	void setx(float val) override;
+	void sety(float val) override;
 };
 

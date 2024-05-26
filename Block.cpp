@@ -73,4 +73,14 @@ float Block::geth()
 	return h;
 }
 
+void Block::setx(float val)
+{
+	x = val;
+}
+
+void Block::sety(float val)
+{
+	y = val;
+}
+
 

@@ -48,3 +48,13 @@ float Spider::geth()
 {
 	return h;
 }
+
+void Spider::setx(float val)
+{
+	x = val;
+}
+
+void Spider::sety(float val)
+{
+	y = val;
+}

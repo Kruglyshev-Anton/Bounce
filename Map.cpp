@@ -56,7 +56,24 @@ std::string Map::getType()
 
 void Map::Move(unsigned char k)
 {
-	map[BallI][BallJ]->Move(k);
+	Ball* ball = dynamic_cast<Ball*>(map[BallI][BallJ]);
+	ball->Move(k);
+	if (ball->getx() > one_cell_size*14) {
+		for (int i = 0; i < pointhmap; ++i) {
+			for (int j = 0; j < pointwmap; ++j) {
+				
+				map[i][j]->setx(map[i][j]->getx()- one_cell_size*0.1);
+			}
+		}
+	}
+	if (ball->getx() < 7*one_cell_size) {
+		for (int i = 0; i < pointhmap; ++i) {
+			for (int j = 0; j < pointwmap; ++j) {
+
+				map[i][j]->setx(map[i][j]->getx() + one_cell_size * 0.1);
+			}
+		}
+	}
 	
 	
 }
@@ -120,6 +137,14 @@ float Map::getw()
 float Map::geth()
 {
 	return 0.0f;
+}
+
+void Map::setx(float val)
+{
+}
+
+void Map::sety(float val)
+{
 }
 
 

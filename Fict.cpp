@@ -32,3 +32,11 @@ float Fict::geth()
 {
 	return 0.0f;
 }
+
+void Fict::setx(float val)
+{
+}
+
+void Fict::sety(float val)
+{
+}

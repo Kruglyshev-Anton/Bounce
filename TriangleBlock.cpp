@@ -109,6 +109,16 @@ float TriangleBlock::geth()
 	return h;
 }
 
+void TriangleBlock::setx(float val)
+{
+	x = val;
+}
+
+void TriangleBlock::sety(float val)
+{
+	y = val;
+}
+
 
 
 

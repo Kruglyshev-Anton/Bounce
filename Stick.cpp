@@ -48,3 +48,13 @@ float Stick::geth()
 {
 	return h;
 }
+
+void Stick::setx(float val)
+{
+	x = val;
+}
+
+void Stick::sety(float val)
+{
+	y = val;
+}
