@@ -89,6 +89,26 @@ void TriangleBlock::Move(unsigned char k)
 {
 }
 
+float TriangleBlock::getx()
+{
+	return x;
+}
+
+float TriangleBlock::gety()
+{
+	return y;
+}
+
+float TriangleBlock::getw()
+{
+	return w;
+}
+
+float TriangleBlock::geth()
+{
+	return h;
+}
+
 
 
 

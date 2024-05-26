@@ -2,6 +2,7 @@
 
 Block::Block(float x, float y):x(x), y(y)
 {
+	
 }
 
 void Block::Draw()
@@ -35,6 +36,41 @@ void Block::Move(unsigned char k)
 std::string Block::getType()
 {
 	return "block";
+}
+
+int Block::Col(std::vector<std::pair<float, float>>& point)
+{
+	float x1, y1;
+	for (int i = 0; i < 4; ++i) {
+		x1 = point[i].first;
+		y1 = point[i].second;
+		if (x1 > x && x1 < x + w && y1 > y && y1 < y + h) {
+			//std::cout << i+1 << '\n';
+			
+			return i+1;
+		}
+	}
+	return 0;
+}
+
+float Block::getx()
+{
+	return x;
+}
+
+float Block::gety()
+{
+	return y;
+}
+
+float Block::getw()
+{
+	return w;
+}
+
+float Block::geth()
+{
+	return h;
 }
 
 

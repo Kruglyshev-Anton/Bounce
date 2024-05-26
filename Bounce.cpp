@@ -5,12 +5,17 @@ Map test("levels/test.txt");
 std::vector<bool> keys(255, false);
 void Moving() {
 	for (int i = 0; i < 255; ++i) {
-		if (keys[i])test.Move(static_cast<char>(i));
+
+		if (keys[i]) {
+			test.Move(static_cast<char>(i));
+			//std::cout << static_cast<char>(i);
+		}
 	}
 }
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+	//test.Collision();
 	Moving();
 	test.Draw();
 	glutSwapBuffers();

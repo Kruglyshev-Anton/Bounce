@@ -2,6 +2,11 @@
 
 Ball::Ball(float x, float y):x(x+one_cell_size*0.5),y(y+ one_cell_size * 0.5)
 {
+    //std::cout << 1;
+    for (float i = 0; i < 6.282; i += 3.141 / 2) {
+        pois.push_back({x+r*cosf(-i)+r, y+r+sinf(-i)*r});
+    }
+    a = one_cell_size * 0.01;
 }
 
 std::string Ball::getType()
@@ -14,15 +19,19 @@ void Ball::Move(unsigned char k)
     
     if (k == 'd') {
         vx=one_cell_size*0.1;
-        Draw();
+        //Draw();
     }
     if (k == 'a') {
         vx = -one_cell_size * 0.1;
-        Draw();
+        //Draw();
     }
+    //std::cout << isJ << '\n';
     if (k == ' '&&isJ) {
+        
+        //vy -= 5;
+        a = one_cell_size * 0.02;
         jump = -one_cell_size*0.3;
-        Draw();
+        //Draw();
         isJ = false;
     }
 
@@ -59,24 +68,32 @@ void Ball::Draw()
         glVertex2f(px, py);
     }
     glEnd();
+    glColor3f(0, 0, 0);
+    glPointSize(3);
+    glBegin(GL_POINTS);
+    for (int i = 0; i < 4; ++i) {
+        glVertex2f(pois[i].first, pois[i].second);
+    }
+    glEnd();
+    glPointSize(1);
     Phisycs();
    
 }
 
 void Ball::Phisycs()
 {
+    for (int i = 0; i < 4; ++i) {
+        pois[i].first += vx;
+        pois[i].second += vy;
+    }
     y += vy;
     x += vx;
-    if (vx > 0)vx -= one_cell_size * 0.005;
-    else if (vx < 0)vx += one_cell_size * 0.005;
+    if (vx > one_cell_size * 0.005)vx -= one_cell_size * 0.005;
+    else if (vx < -one_cell_size * 0.005)vx += one_cell_size * 0.005;
     else vx = 0;
-    float a;
-    if (y + r >= 300) { 
-        a = 0;
-        vy = 0;
-        isJ = true;
-    }
-    else a = one_cell_size * 0.009;
+    
+   
+    a = one_cell_size * 0.01;
     vy += (jump + a);
     
     
@@ -87,4 +104,59 @@ void Ball::Phisycs()
     //if (vy > one_cell_size * 0.01)vy = one_cell_size * 0.01;
     
 
+}
+
+std::vector<std::pair<float, float>>& Ball::getColl()
+{
+    return pois;
+}
+
+void Ball::sety(float val)
+{
+    float pa = val - y;
+
+    y += pa;
+    for (int i = 0; i < 4; ++i) {
+        
+        pois[i].second += pa;
+    }
+    vy = 0;
+    a = 0;
+}
+
+void Ball::setx(float val)
+{
+    float pa = val - x;
+
+    x += pa;
+    for (int i = 0; i < 4; ++i) {
+
+        pois[i].first += pa;
+    }
+    
+}
+
+void Ball::setJ(bool val)
+{
+    isJ = val;
+}
+
+float Ball::getx()
+{
+    return x;
+}
+
+float Ball::gety()
+{
+    return y;
+}
+
+float Ball::getw()
+{
+    return 2*r;
+}
+
+float Ball::geth()
+{
+    return 2*r;
 }

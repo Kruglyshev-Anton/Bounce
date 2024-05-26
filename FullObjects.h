@@ -10,5 +10,9 @@ public:
 	virtual void Draw()=0;
 	virtual std::string getType() = 0;
 	virtual void Move(unsigned char k) = 0;
+	virtual float getx() = 0;
+	virtual float gety() = 0;
+	virtual float getw() = 0;
+	virtual float geth() = 0;
 };
 

@@ -34,3 +34,23 @@ std::string Ring::getType()
 void Ring::Move(unsigned char k)
 {
 }
+
+float Ring::getx()
+{
+	return x;
+}
+
+float Ring::gety()
+{
+	return y;
+}
+
+float Ring::getw()
+{
+	return w;
+}
+
+float Ring::geth()
+{
+	return h;
+}

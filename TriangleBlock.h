@@ -11,5 +11,9 @@ public:
 	void Draw() override;
 	std::string getType() override;
 	void Move(unsigned char k) override;
+	float getx() override;
+	float gety() override;
+	float getw() override;
+	float geth() override;
 };
 

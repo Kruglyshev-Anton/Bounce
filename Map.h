@@ -13,11 +13,17 @@ class Map:public FullObjects
 private:
 	int pointwmap, pointhmap;
 	std::vector<std::vector<FullObjects*>> map;
+	float BallI, BallJ;
 public:
 	Map(const char* f);
 	void Draw() override;
 	std::string getType() override;
 	void Move(unsigned char k) override;
+	void Collision();
+	float getx() override;
+	float gety() override;
+	float getw() override;
+	float geth() override;
 	//void actions_keyboard(unsigned char k);
 };
 

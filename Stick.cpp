@@ -28,3 +28,23 @@ void Stick::Draw()
 void Stick::Move(unsigned char k)
 {
 }
+
+float Stick::getx()
+{
+	return x;
+}
+
+float Stick::gety()
+{
+	return y;
+}
+
+float Stick::getw()
+{
+	return w;
+}
+
+float Stick::geth()
+{
+	return h;
+}

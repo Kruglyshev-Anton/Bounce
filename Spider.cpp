@@ -28,3 +28,23 @@ void Spider::Draw()
 void Spider::Move(unsigned char k)
 {
 }
+
+float Spider::getx()
+{
+	return x;
+}
+
+float Spider::gety()
+{
+	return y;
+}
+
+float Spider::getw()
+{
+	return w;
+}
+
+float Spider::geth()
+{
+	return h;
+}
