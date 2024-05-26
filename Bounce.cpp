@@ -2,17 +2,28 @@
 #include "glut.h"
 #include "Map.h"
 Map test("levels/test.txt");
+std::vector<bool> keys(255, false);
+void Moving() {
+	for (int i = 0; i < 255; ++i) {
+		if (keys[i])test.Move(static_cast<char>(i));
+	}
+}
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+	Moving();
 	test.Draw();
 	glutSwapBuffers();
 }
 void mouse(int button, int state, int x, int y) {
 	
 }
-void keyboard(unsigned char key, int x, int y) {
-	test.Move(key);
+
+void keyboardD(unsigned char key, int x, int y) {
+	keys[key] = true;
+}
+void keyboardU(unsigned char key, int x, int y) {
+	keys[key] = false;
 }
 void init() {
 	// Цвет фона
@@ -42,7 +53,8 @@ int main(int argc, char** argv) {
 	init();
 	glutDisplayFunc(display);
 	glutMouseFunc(mouse);
-	glutKeyboardFunc(keyboard);
+	glutKeyboardFunc(keyboardD);
+	glutKeyboardUpFunc(keyboardU);
 	glutTimerFunc(10, timer, 0);
 	glutMainLoop();
 	return 0;
