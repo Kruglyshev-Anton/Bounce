@@ -6,7 +6,7 @@ Ball::Ball(float x, float y):x(x+one_cell_size*0.5),y(y+ one_cell_size * 0.5)
     for (float i = 0; i < 6.282; i += 3.141 / 2) {
         pois.push_back({x+r*cosf(-i)+r, y+r+sinf(-i)*r});
     }
-    a = one_cell_size * 0.01;
+    a = one_cell_size * 0.04;
 }
 
 std::string Ball::getType()
@@ -16,24 +16,38 @@ std::string Ball::getType()
 
 void Ball::Move(unsigned char k)
 {
-    
+    //std::cout << k;
     if (k == 'd') {
-        vx=one_cell_size*0.1;
+        isMove = true;
+        isMoveR = true;
+        vx = 0.25 * one_cell_size;
+        k = 'q';
         //Draw();
     }
     if (k == 'a') {
-        vx = -one_cell_size * 0.1;
+        isMove = true;
+        isMoveL = true;
+        vx = -0.25 * one_cell_size;
+        k = 'q';
         //Draw();
     }
     //std::cout << isJ << '\n';
     if (k == ' '&&isJ) {
-        
-        //vy -= 5;
-        a = one_cell_size * 0.02;
-        jump = -one_cell_size*0.3;
+        isMove = true;
+        isMoveU = true;
+        isMoveD = true;
+        vy -= 1;
+        a = one_cell_size * 0.04;
+        jump = -one_cell_size*0.6;
+        k = 'q';
         //Draw();
         isJ = false;
     }
+    if (!(k == ' ' && isJ) && !(k == 'a') && !(k == 'd')) {
+        isMove = false;
+        
+    }
+    
 
 }
 
@@ -82,18 +96,23 @@ void Ball::Draw()
 
 void Ball::Phisycs()
 {
+    if (vy > r)vy = r;
+    if (vy < -r)vy = -r;
     for (int i = 0; i < 4; ++i) {
         pois[i].first += vx;
         pois[i].second += vy;
     }
+    
     y += vy;
     x += vx;
-    if (vx > one_cell_size * 0.005)vx -= one_cell_size * 0.005;
-    else if (vx < -one_cell_size * 0.005)vx += one_cell_size * 0.005;
-    else vx = 0;
+    if (!isMove) {
+        if (vx > one_cell_size * 0.005)vx -= one_cell_size * 0.05;
+        else if (vx < -one_cell_size * 0.005)vx += one_cell_size * 0.05;
+        else vx = 0;
+    }
     
-   
-    a = one_cell_size * 0.01;
+    if (isMoveD)a = one_cell_size * 0.04;
+    else a = 0;
     vy += (jump + a);
     
     
@@ -124,6 +143,8 @@ void Ball::sety(float val)
     a = 0;
 }
 
+
+
 void Ball::setx(float val)
 {
     float pa = val - x;
@@ -140,6 +161,8 @@ void Ball::setJ(bool val)
 {
     isJ = val;
 }
+
+
 
 float Ball::getx()
 {

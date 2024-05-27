@@ -58,19 +58,19 @@ void Map::Move(unsigned char k)
 {
 	Ball* ball = dynamic_cast<Ball*>(map[BallI][BallJ]);
 	ball->Move(k);
-	if (ball->getx() > one_cell_size*14) {
+	if (ball->getx() > one_cell_size*35) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 				
-				map[i][j]->setx(map[i][j]->getx()- one_cell_size*0.1);
+				map[i][j]->setx(map[i][j]->getx()- 20 * one_cell_size);
 			}
 		}
 	}
-	if (ball->getx() < 7*one_cell_size) {
+	if (ball->getx() < 0) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 
-				map[i][j]->setx(map[i][j]->getx() + one_cell_size * 0.1);
+				map[i][j]->setx(map[i][j]->getx() + 10 * one_cell_size);
 			}
 		}
 	}
@@ -82,23 +82,24 @@ void Map::Collision()
 {
 	Ball* b1 = dynamic_cast<Ball*>(map[BallI][BallJ]);
 	std::vector<std::pair<float, float>> vec = b1->getColl();
+	int nk;
 	//for (int i = 0; i < 8; ++i)std::cout << vec[i].first << ' ' << vec[i].second << '\n';
 	//std::cout << '\n';
 	float r = (b1->getw()) / 2;
 	for (int i = 0; i < pointhmap; ++i) {
 		for (int j = 0; j < pointwmap; ++j) {
-			
 			if (map[i][j]->getType() == "block") {
 				Block* bl = dynamic_cast<Block*>(map[i][j]);
 				
-				int nk = bl->Col(vec);
+				nk = bl->Col(vec);
 				
 				if (nk==1) {
+					
 					b1->setx(bl->getx() - r);
 				}
 				
 				else if (nk == 2) {
-					
+					b1->isMoveU = false;
 					b1->sety(bl->gety() + bl->geth() + 1.1*r);
 				}
 				
@@ -109,15 +110,125 @@ void Map::Collision()
 				
 				else if (nk == 4) {
 					b1->setJ(true);
-					b1->sety(bl->gety() - r);
+					b1->isMoveD = false;
+					b1->sety(bl->gety() - 1.0*r);
 				}
+				else if (nk == 0) {
+					b1->isMoveD = true;
+					b1->isMoveU = true;
+					//b1->sety(bl->gety() - 1.3 * r);
+				}
+
 				
 			}
+			else if (map[i][j]->getType() == "t_block") {
+				TriangleBlock* bl = dynamic_cast<TriangleBlock*>(map[i][j]);
+
+				nk = bl->Col(vec);
+				if (bl->getconf() == 1) {
+					if (nk == 1) {
+						//b1->setx(bl->getx() - r);
+						b1->sety(b1->gety() - 0.30 * one_cell_size);
+						b1->setx(b1->getx() - 0.015 * one_cell_size);
+					}
+					else if (nk == 2) {
+						
+						b1->sety(bl->gety() + bl->geth() + 1.1 * r);
+					}
+					else if (nk == 3) {
+						
+						b1->setx(bl->getx() + bl->getw() + r);
+
+					}
+					else if (nk == 4) {
+						b1->setJ(true);
+						b1->isMoveD = false;
+						b1->sety(b1->gety() - 0.3 * one_cell_size);
+						b1->setx(b1->getx() - 0.015 * one_cell_size);
+
+					}
+
+				}
+				else if (bl->getconf() == 2) {
+					if (nk == 3) {
+						//b1->setx(bl->getx() - r);
+						//b1->setJ(true);
+						b1->sety(b1->gety() - 0.30 * one_cell_size);
+						b1->setx(b1->getx() - 0.015 * one_cell_size);
+					}
+					else if (nk == 2) {
+						//b1->setJ(true);
+						b1->sety(bl->gety() + bl->geth() + 1.1 * r);
+					}
+					else if (nk == 1) {
+						//b1->setJ(true);
+						b1->setx(bl->getx() - bl->getw() + r);
+
+					}
+					else if (nk == 4) {
+						b1->setJ(true);
+						b1->isMoveD = false;
+						b1->sety(b1->gety() - 0.3 * one_cell_size);
+						b1->setx(b1->getx() + 0.015 * one_cell_size);
+					}
+				}
+				else if (bl->getconf() == 3) {
+					if (nk == 2) {
+						//b1->setx(bl->getx() - r);
+						//b1->isMoveU = false;
+						b1->sety(b1->gety()+0.20*one_cell_size);
+						b1->setx(b1->getx() - 0.35 * one_cell_size);
+					}
+					else if (nk == 4) {
+						b1->setJ(true);
+						b1->isMoveD = false;
+						b1->sety(bl->gety() - bl->geth() + 1.3 * r);
+					}
+					else if (nk == 3) {
+						b1->setx(bl->getx() + bl->getw() + 1.1*r);
+
+					}
+					else if (nk == 1) {
+						
+						b1->sety(b1->gety() + 0.2 * one_cell_size);
+						b1->setx(b1->getx() - 0.35 * one_cell_size);
+					}
+					
+				}
+				else if (bl->getconf() == 4) {
+					if (nk == 2) {
+						//b1->setx(bl->getx() - r);
+						b1->sety(b1->gety() - 0.20 * one_cell_size);
+						b1->setx(b1->getx() + 0.35 * one_cell_size);
+					}
+					else if (nk == 4) {
+						b1->setJ(true);
+						b1->isMoveD = false;
+						b1->sety(bl->gety() - bl->geth() + 1.1 * r);
+					}
+					else if (nk == 1) {
+						b1->setx(bl->getx() - bl->getw() + r);
+
+					}
+					else if (nk == 3) {
+					
+						b1->sety(b1->gety() - 0.2 * one_cell_size);
+						b1->setx(b1->getx() + 0.35 * one_cell_size);
+					}
+				}
+				if (nk == 0) {
+					b1->isMoveD = true;
+					b1->isMoveU = true;
+					//b1->sety(bl->gety() - 1.3 * r);
+				}
+			}
+			
+		}
 			//std::cout << (map[i][j])->getType();
 		}
 	}
 	
-}
+
 
 float Map::getx()
 {

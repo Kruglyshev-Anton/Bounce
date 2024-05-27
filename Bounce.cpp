@@ -42,7 +42,7 @@ void init() {
 void timer(int = 0) {
 	display();
 
-	glutTimerFunc(10, timer, 0);
+	glutTimerFunc(20, timer, 0);
 }
 
 int main(int argc, char** argv) {
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 	glutMouseFunc(mouse);
 	glutKeyboardFunc(keyboardD);
 	glutKeyboardUpFunc(keyboardU);
-	glutTimerFunc(10, timer, 0);
+	glutTimerFunc(20, timer, 0);
 	glutMainLoop();
 	return 0;
 }
