@@ -16,8 +16,16 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	//test.Collision();
-	Moving();
-	test.Draw();
+	if (test.getGame()==0) {
+		Moving();
+		test.Draw();
+	}
+	else if(test.getGame() == 1){
+		test = Map("levels/win.txt");
+	}
+	else {
+		test = Map("levels/lose.txt");
+	}
 	glutSwapBuffers();
 }
 void mouse(int button, int state, int x, int y) {

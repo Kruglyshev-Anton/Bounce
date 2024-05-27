@@ -1,7 +1,12 @@
 #pragma once
 #include "glut.h"
-class Button
-{
+
+class Button {
+	
+
+
+
 
 };
+
 

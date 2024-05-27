@@ -4,8 +4,9 @@ class Ring:public FullObjects
 {
 private:
 	float x, y, h=1.5*one_cell_size, w=0.3*one_cell_size;
-	bool isact = false;
+	
 public:
+	bool isact = false;
 	Ring(float x, float y);
 	void Draw() override;
 	std::string getType() override;
@@ -16,5 +17,6 @@ public:
 	float geth() override;
 	void setx(float val) override;
 	void sety(float val) override;
+	bool Col(float x1, float y1);
 };
 

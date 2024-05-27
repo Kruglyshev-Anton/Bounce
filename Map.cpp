@@ -6,7 +6,7 @@ Map::Map(const char* f)
 	(fin).open(f);
 	int x;
 	char c;
-	fin >> pointwmap >> pointhmap;
+	fin >> pointwmap >> pointhmap>>countRings;
 	//std::cout << pointhmap;
 	for (int i = 0; i < pointhmap; ++i) {
 		map.push_back(std::vector<FullObjects*>());
@@ -27,6 +27,8 @@ Map::Map(const char* f)
 				map[i].push_back(new Ball(j * one_cell_size, i * one_cell_size));
 				BallI = i;
 				BallJ = j;
+				X = j * one_cell_size;
+				Y = i * one_cell_size;
 			}
 			else {
 				map[i].push_back(new Fict());
@@ -40,6 +42,13 @@ Map::Map(const char* f)
 
 void Map::Draw()
 {
+	for (int i = 0; i < pointhmap; ++i) {
+		for (int j = 0; j < pointwmap; ++j) {
+
+			if (map[i][j]->getType() == "spider")map[i][j]->Move('a');
+
+		}
+	}
 	for (int i = 0; i < pointhmap; ++i) {
 		for (int j = 0; j < pointwmap; ++j) {
 			map[i][j]->Draw();
@@ -58,21 +67,26 @@ void Map::Move(unsigned char k)
 {
 	Ball* ball = dynamic_cast<Ball*>(map[BallI][BallJ]);
 	ball->Move(k);
+	
 	if (ball->getx() > one_cell_size*35) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 				
 				map[i][j]->setx(map[i][j]->getx()- 20 * one_cell_size);
+				
 			}
 		}
+		X -= 20 * one_cell_size;
 	}
 	if (ball->getx() < 0) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 
-				map[i][j]->setx(map[i][j]->getx() + 10 * one_cell_size);
+				map[i][j]->setx(map[i][j]->getx() + 20 * one_cell_size);
+				
 			}
 		}
+		X += 20 * one_cell_size;
 	}
 	
 	
@@ -88,7 +102,8 @@ void Map::Collision()
 	float r = (b1->getw()) / 2;
 	for (int i = 0; i < pointhmap; ++i) {
 		for (int j = 0; j < pointwmap; ++j) {
-			if (map[i][j]->getType() == "block") {
+			if (map[i][j]->getType() == "fict")continue;
+			else if (map[i][j]->getType() == "block") {
 				Block* bl = dynamic_cast<Block*>(map[i][j]);
 				
 				nk = bl->Col(vec);
@@ -222,6 +237,44 @@ void Map::Collision()
 					//b1->sety(bl->gety() - 1.3 * r);
 				}
 			}
+			else if (map[i][j]->getType() == "ring") {
+				Ring* bl = dynamic_cast<Ring*>(map[i][j]);
+				
+				if (bl->Col(b1->getx(), b1->gety())&&!bl->isact) {
+					bl->isact = true;
+					++countActRings;
+					if (countActRings == countRings)isGame = 1;
+					//std::cout << 1;
+				}
+			}
+			else if (map[i][j]->getType() == "spider") {
+				Spider* bl = dynamic_cast<Spider*>(map[i][j]);
+				nk = bl->Col(vec);
+				if (nk != 0) {
+					--lives;
+					b1->setx(X);
+					b1->sety(Y);
+				}
+				if (lives == 0) {
+					isGame = -1;
+					//b1->sety(bl->gety() - 1.3 * r);
+				}
+				
+			}
+			else if (map[i][j]->getType() == "stick") {
+				Stick* bl = dynamic_cast<Stick*>(map[i][j]);
+				nk = bl->Col(vec);
+				if (nk != 0) {
+					--lives;
+					b1->setx(X);
+					b1->sety(Y);
+				}
+				if (lives == 0) {
+					isGame = -1;
+					//b1->sety(bl->gety() - 1.3 * r);
+				}
+
+			}
 			
 		}
 			//std::cout << (map[i][j])->getType();
@@ -256,6 +309,16 @@ void Map::setx(float val)
 
 void Map::sety(float val)
 {
+}
+
+int Map::getGame()
+{
+	return isGame;
+}
+
+Map::~Map()
+{
+	
 }
 
 

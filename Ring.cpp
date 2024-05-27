@@ -7,10 +7,10 @@ Ring::Ring(float x, float y):x(x+0.2*one_cell_size),y(y-0.5*one_cell_size)
 void Ring::Draw()
 {
 	if (isact) {
-		glColor3f(0,255, 0);
+		glColor3f(0,1, 0);
 	}
 	else {
-		glColor3f(255, 255, 0);
+		glColor3f(0, 0, 1);
 	}
 	glLineWidth(3);
 	glBegin(GL_LINES);
@@ -63,4 +63,12 @@ void Ring::setx(float val)
 void Ring::sety(float val)
 {
 	y = val;
+}
+
+bool Ring::Col(float x1, float y1)
+{
+	if (x1 > x && x1<x + w && y1>y && y1 < y + h) {
+		return true;
+	}
+	return false;
 }

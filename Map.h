@@ -11,9 +11,13 @@
 class Map:public FullObjects
 {
 private:
-	int pointwmap, pointhmap;
+	int pointwmap, pointhmap, countRings, lives=3;
+	int countActRings = 0;
 	std::vector<std::vector<FullObjects*>> map;
-	float BallI, BallJ;
+	int BallI, BallJ;
+	float X, Y;
+	int isGame = 0;
+
 public:
 	Map(const char* f);
 	void Draw() override;
@@ -26,6 +30,8 @@ public:
 	float geth() override;
 	void setx(float val) override;
 	void sety(float val) override;
+	int getGame();
+	~Map();
 	//void actions_keyboard(unsigned char k);
 };
 

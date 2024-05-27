@@ -16,5 +16,6 @@ public:
 	float geth() override;
 	void setx(float val) override;
 	void sety(float val) override;
+	int Col(std::vector<std::pair<float, float>>& point);
 };
 

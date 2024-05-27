@@ -3,8 +3,9 @@
 class Spider:public FullObjects
 {
 private:
-	float x, y, h=one_cell_size*2, w=one_cell_size*2;
+	float x, y, h=one_cell_size*2, w=one_cell_size*2, speed=0.05*one_cell_size, moveheig=0;
 
+	bool U = true, D = false;
 public:
 	Spider(float x, float y);
 	std::string getType() override;
@@ -16,5 +17,6 @@ public:
 	float geth() override;
 	void setx(float val) override;
 	void sety(float val) override;
+	int Col(std::vector<std::pair<float, float>>& point);
 };
 

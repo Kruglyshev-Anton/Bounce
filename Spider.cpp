@@ -27,6 +27,18 @@ void Spider::Draw()
 
 void Spider::Move(unsigned char k)
 {
+	if (moveheig < 3 * one_cell_size) {
+		y -= speed;
+		moveheig += abs(speed);
+		//std::cout << moveheig << '\n';
+	}
+	else {
+		U = !U;
+		D = !D;
+		speed = -speed;
+		moveheig = 0;
+	}
+	
 }
 
 float Spider::getx()
@@ -57,4 +69,19 @@ void Spider::setx(float val)
 void Spider::sety(float val)
 {
 	y = val;
+}
+
+int Spider::Col(std::vector<std::pair<float, float>>& point)
+{
+	float x1, y1;
+	for (int i = 0; i < 4; ++i) {
+		x1 = point[i].first;
+		y1 = point[i].second;
+		if (x1 >= x && x1 <= x + w && y1 >= y && y1 <= y + h) {
+			//std::cout << i+1 << '\n';
+
+			return i + 1;
+		}
+	}
+	return 0;
 }
