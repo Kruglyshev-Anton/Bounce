@@ -40,7 +40,9 @@ std::string Block::getType()
 
 int Block::Col(std::vector<std::pair<float, float>>& point)
 {
+	
 	float x1, y1;
+	
 	for (int i = 0; i < 4; ++i) {
 		x1 = point[i].first;
 		y1 = point[i].second;

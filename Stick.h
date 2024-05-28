@@ -3,7 +3,7 @@
 class Stick:public FullObjects
 {
 private:
-	float x, y, h=one_cell_size*2, w=one_cell_size;
+	float x, y, h=one_cell_size, w=0.4*one_cell_size;
 
 public:
 	Stick(float x, float y);

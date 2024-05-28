@@ -1,2 +1,4 @@
-﻿  Button.cpp
+﻿  Bounce.cpp
+C:\Users\user\Desktop\laboratory 8\laboratoryWork8Bounce\Bounce.cpp(35,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\user\Desktop\laboratory 8\laboratoryWork8Bounce\Bounce.cpp(52,20): warning C4018: <: несоответствие типов со знаком и без знака
   laboratoryWork8Bounce.vcxproj -> C:\Users\user\Desktop\laboratory 8\laboratoryWork8Bounce\Debug\laboratoryWork8Bounce.exe

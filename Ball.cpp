@@ -20,14 +20,14 @@ void Ball::Move(unsigned char k)
     if (k == 'd') {
         isMove = true;
         isMoveR = true;
-        vx = 0.25 * one_cell_size;
+        vx = 0.24 * one_cell_size;
         k = 'q';
         //Draw();
     }
     if (k == 'a') {
         isMove = true;
         isMoveL = true;
-        vx = -0.25 * one_cell_size;
+        vx = -0.24 * one_cell_size;
         k = 'q';
         //Draw();
     }
@@ -38,7 +38,7 @@ void Ball::Move(unsigned char k)
         isMoveD = true;
         vy -= 1;
         a = one_cell_size * 0.04;
-        jump = -one_cell_size*0.6;
+        jump = -one_cell_size;
         k = 'q';
         //Draw();
         isJ = false;
@@ -98,16 +98,20 @@ void Ball::Phisycs()
 {
     if (vy > r)vy = r;
     if (vy < -r)vy = -r;
+
     for (int i = 0; i < 4; ++i) {
+       
         pois[i].first += vx;
+        
         pois[i].second += vy;
     }
     
     y += vy;
+    
     x += vx;
     if (!isMove) {
-        if (vx > one_cell_size * 0.005)vx -= one_cell_size * 0.05;
-        else if (vx < -one_cell_size * 0.005)vx += one_cell_size * 0.05;
+        if (vx > one_cell_size * 0.1)vx -= one_cell_size * 0.03;
+        else if (vx < -one_cell_size * 0.1)vx += one_cell_size * 0.03;
         else vx = 0;
     }
     
@@ -154,6 +158,7 @@ void Ball::setx(float val)
 
         pois[i].first += pa;
     }
+    vx = 0;
     
 }
 

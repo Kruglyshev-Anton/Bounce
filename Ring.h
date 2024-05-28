@@ -3,7 +3,7 @@
 class Ring:public FullObjects
 {
 private:
-	float x, y, h=1.5*one_cell_size, w=0.3*one_cell_size;
+	float x, y, h=one_cell_size, w=0.3*one_cell_size;
 	
 public:
 	bool isact = false;

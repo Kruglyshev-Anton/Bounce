@@ -1,6 +1,6 @@
 #include "Stick.h"
 
-Stick::Stick(float x, float y):x(x), y(y)
+Stick::Stick(float x, float y):x(x+0.2*one_cell_size), y(y)
 {
 }
 
@@ -12,11 +12,12 @@ std::string Stick::getType()
 void Stick::Draw()
 {
 
-	glColor3f(0, 140, 0);
+	glColor3f(0, 0.5, 0);
 	glLineWidth(3);
 	glBegin(GL_LINES);
 	glVertex2f(x+w/2, y);
 	glVertex2f(x + w / 2, y+h);
+	glColor3f(0.5, 0, 0.5);
 	glVertex2f(x, y+h/10);
 	glVertex2f(x + w, y+h/10);
 	glVertex2f(x, y+h/3);

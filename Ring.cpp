@@ -1,6 +1,6 @@
 #include "Ring.h"
 
-Ring::Ring(float x, float y):x(x+0.2*one_cell_size),y(y-0.5*one_cell_size)
+Ring::Ring(float x, float y):x(x+0.2*one_cell_size),y(y)
 {
 }
 

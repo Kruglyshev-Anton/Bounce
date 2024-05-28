@@ -134,6 +134,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fict.cpp" />
     <ClCompile Include="FullObjects.cpp" />
+    <ClCompile Include="Knopka.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Ring.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Fict.h" />
     <ClInclude Include="FullObjects.h" />
+    <ClInclude Include="Knopka.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Ring.h" />

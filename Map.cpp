@@ -42,20 +42,20 @@ Map::Map(const char* f)
 
 void Map::Draw()
 {
-	for (int i = 0; i < pointhmap; ++i) {
-		for (int j = 0; j < pointwmap; ++j) {
-
-			if (map[i][j]->getType() == "spider")map[i][j]->Move('a');
-
-		}
-	}
+	std::string txt1 = "lives: " + std::to_string(lives);
+	std::string txt2 = std::to_string(countRings)+"/"+std::to_string(countActRings);
+	
 	for (int i = 0; i < pointhmap; ++i) {
 		for (int j = 0; j < pointwmap; ++j) {
 			map[i][j]->Draw();
+			if (map[i][j]->getType() == "fict")continue;
 			if(i==BallI&&j==BallJ)Collision();
+			if (map[i][j]->getType() == "spider")map[i][j]->Move('a');
 			//std::cout << (map[i][j])->getType();
 		}
 	}
+	drawTxt(txt2, one_cell_size, 30, 20);
+	drawTxt(txt1, one_cell_size, 10, 20);
 }
 
 std::string Map::getType()
@@ -68,25 +68,49 @@ void Map::Move(unsigned char k)
 	Ball* ball = dynamic_cast<Ball*>(map[BallI][BallJ]);
 	ball->Move(k);
 	
-	if (ball->getx() > one_cell_size*35) {
+	if (ball->getx() > Windoww) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 				
-				map[i][j]->setx(map[i][j]->getx()- 20 * one_cell_size);
+				map[i][j]->setx(map[i][j]->getx()- Windoww);
 				
 			}
 		}
-		X -= 20 * one_cell_size;
+		X -= Windoww;
+		dx -= Windoww;
 	}
 	if (ball->getx() < 0) {
 		for (int i = 0; i < pointhmap; ++i) {
 			for (int j = 0; j < pointwmap; ++j) {
 
-				map[i][j]->setx(map[i][j]->getx() + 20 * one_cell_size);
+				map[i][j]->setx(map[i][j]->getx() + Windoww);
 				
 			}
 		}
-		X += 20 * one_cell_size;
+		X += Windoww;
+		dx += Windoww;
+	}
+	if (ball->gety() > one_cell_size * pointhmap) {
+		for (int i = 0; i < pointhmap; ++i) {
+			for (int j = 0; j < pointwmap; ++j) {
+
+				map[i][j]->sety(map[i][j]->gety() - pointhmap * one_cell_size);
+
+			}
+		}
+		Y -= pointhmap * one_cell_size;
+		dy -= pointhmap * one_cell_size;
+	}
+	if (ball->gety() < 0) {
+		for (int i = 0; i < pointhmap; ++i) {
+			for (int j = 0; j < pointwmap; ++j) {
+
+				map[i][j]->sety(map[i][j]->gety() + pointhmap * one_cell_size);
+
+			}
+		}
+		Y += pointhmap * one_cell_size;
+		dy += pointhmap * one_cell_size;
 	}
 	
 	
@@ -103,73 +127,42 @@ void Map::Collision()
 	for (int i = 0; i < pointhmap; ++i) {
 		for (int j = 0; j < pointwmap; ++j) {
 			if (map[i][j]->getType() == "fict")continue;
-			else if (map[i][j]->getType() == "block") {
-				Block* bl = dynamic_cast<Block*>(map[i][j]);
-				
-				nk = bl->Col(vec);
-				
-				if (nk==1) {
-					
-					b1->setx(bl->getx() - r);
-				}
-				
-				else if (nk == 2) {
-					b1->isMoveU = false;
-					b1->sety(bl->gety() + bl->geth() + 1.1*r);
-				}
-				
-				else if (nk == 3) {
-					b1->setx(bl->getx() + bl->getw() + r);
-					
-				}
-				
-				else if (nk == 4) {
-					b1->setJ(true);
-					b1->isMoveD = false;
-					b1->sety(bl->gety() - 1.0*r);
-				}
-				else if (nk == 0) {
-					b1->isMoveD = true;
-					b1->isMoveU = true;
-					//b1->sety(bl->gety() - 1.3 * r);
-				}
-
-				
-			}
 			else if (map[i][j]->getType() == "t_block") {
 				TriangleBlock* bl = dynamic_cast<TriangleBlock*>(map[i][j]);
 
 				nk = bl->Col(vec);
 				if (bl->getconf() == 1) {
+					//std::cout << nk << '\n';
 					if (nk == 1) {
 						//b1->setx(bl->getx() - r);
+						b1->isMoveR = false;
 						b1->sety(b1->gety() - 0.30 * one_cell_size);
-						b1->setx(b1->getx() - 0.015 * one_cell_size);
+						b1->setx(b1->getx() - 0.15 * one_cell_size);
 					}
 					else if (nk == 2) {
-						
+						b1->isMoveU = false;
 						b1->sety(bl->gety() + bl->geth() + 1.1 * r);
 					}
 					else if (nk == 3) {
-						
-						b1->setx(bl->getx() + bl->getw() + r);
+						//b1->setx(b1->getx());
+						b1->setx(bl->getx() + bl->getw() + 1.1 * r);
 
 					}
 					else if (nk == 4) {
 						b1->setJ(true);
 						b1->isMoveD = false;
 						b1->sety(b1->gety() - 0.3 * one_cell_size);
-						b1->setx(b1->getx() - 0.015 * one_cell_size);
+						b1->setx(b1->getx() - 0.15 * one_cell_size);
 
 					}
 
 				}
 				else if (bl->getconf() == 2) {
-					if (nk == 3) {
+					if (nk == 4) {
 						//b1->setx(bl->getx() - r);
 						//b1->setJ(true);
 						b1->sety(b1->gety() - 0.30 * one_cell_size);
-						b1->setx(b1->getx() - 0.015 * one_cell_size);
+						b1->setx(b1->getx() + 0.015 * one_cell_size);
 					}
 					else if (nk == 2) {
 						//b1->setJ(true);
@@ -180,7 +173,7 @@ void Map::Collision()
 						b1->setx(bl->getx() - bl->getw() + r);
 
 					}
-					else if (nk == 4) {
+					else if (nk == 3) {
 						b1->setJ(true);
 						b1->isMoveD = false;
 						b1->sety(b1->gety() - 0.3 * one_cell_size);
@@ -191,7 +184,7 @@ void Map::Collision()
 					if (nk == 2) {
 						//b1->setx(bl->getx() - r);
 						//b1->isMoveU = false;
-						b1->sety(b1->gety()+0.20*one_cell_size);
+						b1->sety(b1->gety() + 0.20 * one_cell_size);
 						b1->setx(b1->getx() - 0.35 * one_cell_size);
 					}
 					else if (nk == 4) {
@@ -200,15 +193,15 @@ void Map::Collision()
 						b1->sety(bl->gety() - bl->geth() + 1.3 * r);
 					}
 					else if (nk == 3) {
-						b1->setx(bl->getx() + bl->getw() + 1.1*r);
+						b1->setx(bl->getx() + bl->getw() + 1.1 * r);
 
 					}
 					else if (nk == 1) {
-						
+
 						b1->sety(b1->gety() + 0.2 * one_cell_size);
 						b1->setx(b1->getx() - 0.35 * one_cell_size);
 					}
-					
+
 				}
 				else if (bl->getconf() == 4) {
 					if (nk == 2) {
@@ -226,7 +219,7 @@ void Map::Collision()
 
 					}
 					else if (nk == 3) {
-					
+
 						b1->sety(b1->gety() - 0.2 * one_cell_size);
 						b1->setx(b1->getx() + 0.35 * one_cell_size);
 					}
@@ -237,11 +230,50 @@ void Map::Collision()
 					//b1->sety(bl->gety() - 1.3 * r);
 				}
 			}
+			else if (map[i][j]->getType() == "block") {
+				Block* bl = dynamic_cast<Block*>(map[i][j]);
+				
+				nk = bl->Col(vec);
+				
+				if (nk==1) {
+					//b1->isMoveR = false;
+					b1->setx(bl->getx() - 1.0 * r);
+				}
+				
+				else if (nk == 2) {
+					//b1->isMoveU = false;
+					b1->sety(bl->gety() + bl->geth() + 1.1*r);
+				}
+				
+				else if (nk == 3) {
+					//b1->isMoveL = false;
+					b1->setx(bl->getx() + bl->getw() + 1.0 * r);
+					
+				}
+				
+				else if (nk == 4) {
+					b1->setJ(true);
+					b1->isMoveD = false;
+					b1->sety(bl->gety() - 1.001*r);
+				}
+				else if (nk == 0) {
+					b1->isMoveD = true;
+					b1->isMoveU = true;
+					b1->isMoveL = true;
+					b1->isMoveR = true;
+					//b1->sety(bl->gety() - 1.3 * r);
+				}
+
+				
+			}
+			
 			else if (map[i][j]->getType() == "ring") {
 				Ring* bl = dynamic_cast<Ring*>(map[i][j]);
 				
 				if (bl->Col(b1->getx(), b1->gety())&&!bl->isact) {
 					bl->isact = true;
+					X = bl->getx();
+					Y = bl->gety();
 					++countActRings;
 					if (countActRings == countRings)isGame = 1;
 					//std::cout << 1;
@@ -254,6 +286,7 @@ void Map::Collision()
 					--lives;
 					b1->setx(X);
 					b1->sety(Y);
+					
 				}
 				if (lives == 0) {
 					isGame = -1;
@@ -314,6 +347,24 @@ void Map::sety(float val)
 int Map::getGame()
 {
 	return isGame;
+}
+
+float Map::getSizeW()
+{
+	return pointwmap*one_cell_size;
+}
+
+float Map::getSizeH()
+{
+	return pointhmap * one_cell_size;
+}
+
+void Map::drawTxt(std::string& text, float x, float y,float h)
+{
+	glColor3f(0.0, 0.0, 0.0);
+	glRasterPos2f(x, y + h / 2);
+
+	for (int i = 0; i < text.size(); ++i) glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);
 }
 
 Map::~Map()

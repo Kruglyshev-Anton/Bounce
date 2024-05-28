@@ -15,8 +15,9 @@ private:
 	int countActRings = 0;
 	std::vector<std::vector<FullObjects*>> map;
 	int BallI, BallJ;
-	float X, Y;
+	float X, Y, dx=0,dy=0;
 	int isGame = 0;
+	float Windoww = 700;
 
 public:
 	Map(const char* f);
@@ -31,6 +32,9 @@ public:
 	void setx(float val) override;
 	void sety(float val) override;
 	int getGame();
+	float getSizeW();
+	float getSizeH();
+	void drawTxt(std::string& text, float x, float y, float h);
 	~Map();
 	//void actions_keyboard(unsigned char k);
 };
